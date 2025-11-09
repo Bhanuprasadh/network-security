@@ -1,3 +1,3 @@
 <h1> Network Security</h1>
 <hr>
-<p>Network Security projects for phising Data</p>
+<p>Network Security project for phising Data</p>
