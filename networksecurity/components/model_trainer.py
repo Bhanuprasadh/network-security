@@ -109,11 +109,8 @@ class ModelTrainer:
         }
         model_report:dict=evaluate_models(X_train=X_train,y_train=y_train,X_test=x_test,y_test=y_test,
                                           models=models,param=params)
-        
-        ## To get best model score from dict
+    
         best_model_score = max(sorted(model_report.values()))
-
-        ## To get best model name from dict
 
         best_model_name = list(model_report.keys())[
             list(model_report.values()).index(best_model_score)
@@ -123,9 +120,8 @@ class ModelTrainer:
 
         classification_train_metric=get_classification_score(y_true=y_train,y_pred=y_train_pred)
         
-        ## Track the experiements with mlflow
+ 
         self.track_mlflow(best_model,classification_train_metric)
-
 
         y_test_pred=best_model.predict(x_test)
         classification_test_metric=get_classification_score(y_true=y_test,y_pred=y_test_pred)
@@ -139,11 +135,11 @@ class ModelTrainer:
 
         Network_Model=NetworkModel(preprocessor=preprocessor,model=best_model)
         save_object(self.model_trainer_config.trained_model_file_path,obj=NetworkModel)
-        #model pusher
+
         save_object("final_model/model.pkl",best_model)
         
 
-        ## Model Trainer Artifact
+
         model_trainer_artifact=ModelTrainerArtifact(trained_model_file_path=self.model_trainer_config.trained_model_file_path,
                              train_metric_artifact=classification_train_metric,
                              test_metric_artifact=classification_test_metric
@@ -152,12 +148,6 @@ class ModelTrainer:
         return model_trainer_artifact
 
 
-        
-
-
-       
-    
-    
         
     def initiate_model_trainer(self)->ModelTrainerArtifact:
         try:
